@@ -1,0 +1,11 @@
+<resources>
+    <string name="app_name">Обмен Валют ПБ</string>
+    <string name="spinner_title">Выберите валюту</string>
+    <string name="text_tab_header">Заголовок таба</string>
+    <string name="tab1_name">Курсы валют</string>
+    <string name="tab2_name">Конвертер</string>
+    <string name="button_name">Конвертировать</string>
+    <string name="latest_upd">"Последнее обновление: "</string>
+
+
+</resources>
