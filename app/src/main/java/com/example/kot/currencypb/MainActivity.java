@@ -85,71 +85,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-
-
-    private void initCurrencyRatesFragment () {
-//        if (isInternet) {
-//            latestUpdate.setText(saveLatestUpdate.saveLatestUpdateDate(MainActivity.this));
-//            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrency);
-//
-//        }else{
-//            latestUpdate.setText(saveLatestUpdate.loadLatestUpdateDate(MainActivity.this));
-//            myCurrency = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
-//        }
-
-        Log.d (Constants.MYLOG, "myFragmentCurrencyRates = " + myFragmentCurrencyRates);
-        myRecyclerView = myFragmentCurrencyRates.getView().findViewById(R.id.listItem);
-//        myRecyclerView = (RecyclerView) myPagerAdapter.getItem(0).getView().findViewById(R.id.listItem);
-
-        myRecyclerView.setHasFixedSize(true);
-        LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
-        llm.setOrientation(LinearLayoutManager.VERTICAL);
-        myRecyclerView.setLayoutManager(llm);
-        CurrencyAdapter currencyAdapter = new CurrencyAdapter(myList);
-        myRecyclerView.setAdapter(currencyAdapter);
-
-
-        latestUpdate = myFragmentCurrencyRates.getView().findViewById(R.id.latestUpdate);
-//        latestUpdate = (TextView) myPagerAdapter.getItem(0).getView().findViewById(R.id.latestUpdate);
-
-
-//        myList.add(new CurrencyForRecyclerView("Валюта:", "Покупка", "Продажа"));
-////        Log.d (Constants.MYLOG, "myCurrency.size() = " + myCurrency.size());
-//        for (int i = 0; i < myCurrency.size(); i++){
-//            myList.add(new CurrencyForRecyclerView(
-//                    myCurrency.get(i).getCcy() + "/" + myCurrency.get(i).getBaseCcy(),
-//                    myCurrency.get(i).getBuy(),
-//                    myCurrency.get(i).getSale()));
-
-
-//        }
-//        Log.d (Constants.MYLOG, "myList = " + myList.get(4).getCurrency());
-    }
-
-    private void operationsWithCurrencyRatesFragment () {
-        if (isInternet) {
-
-            latestUpdate.setText(saveLatestUpdate.saveLatestUpdateDate(MainActivity.this));
-            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrency);
-
-        }else{
-
-            latestUpdate.setText(saveLatestUpdate.loadLatestUpdateDate(MainActivity.this));
-            myCurrency = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
-
-        }
-
-        myList.add(new CurrencyForRecyclerView("Валюта:", "Покупка", "Продажа"));
-//        Log.d (Constants.MYLOG, "myCurrency.size() = " + myCurrency.size());
-        for (int i = 0; i < myCurrency.size(); i++) {
-            myList.add(new CurrencyForRecyclerView(
-                    myCurrency.get(i).getCcy() + "/" + myCurrency.get(i).getBaseCcy(),
-                    myCurrency.get(i).getBuy(),
-                    myCurrency.get(i).getSale()));
-        }
-    }
-
-
     private void initPager() {
 
 
@@ -166,8 +101,8 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         Log.d(Constants.MYLOG, "FragmentCurrencyRates = " + myPagerAdapter.getItem(0));
         Log.d(Constants.MYLOG, "FragmentConverter = " + myPagerAdapter.getItem(1));
 
-        myFragmentCurrencyRates = (FragmentCurrencyRates) myPagerAdapter.getRegisteredFragment(0);
-        myFragmentConverter = (FragmentConverter) myPagerAdapter.getRegisteredFragment(1);
+//        myFragmentCurrencyRates = (FragmentCurrencyRates) myPagerAdapter.getRegisteredFragment(0);
+//        myFragmentConverter = (FragmentConverter) myPagerAdapter.getRegisteredFragment(1);
 
 
 //        latestUpdate = (TextView) myFragmentCurrencyRates.getView().findViewById(R.id.latestUpdate);
@@ -200,108 +135,6 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
-
-
-
-    private void responseFromPB () {
-
-        Controller.getApi().getData().enqueue(new Callback<List<Currency>>() {
-            @Override
-            public void onResponse(Call<List<Currency>> call, Response<List<Currency>> response) {
-
-                isInternet = true;
-                // 0 - EUR(Base UAH), 1 - RUR(Base UAH), 2 - USD(Base UAH), 3 - BTC(Base USD)
-                myCurrency = response.body();
-                //myCurrency.addAll(response.body());
-//
-            }
-
-            @Override
-            public void onFailure(Call<List<Currency>> call, Throwable t) {
-                isInternet = false;
-
-
-            }
-        });
-
-    }
-
-    private void initConverterFragment() {
-
-        etFirstCurrency = myFragmentConverter.getView().findViewById(R.id.editText);
-        tvSecondCurrency = myFragmentConverter.getView().findViewById(R.id.textView);
-        btnConvert = myFragmentConverter.getView().findViewById(R.id.button);
-        btnConvert.setOnClickListener(this);
-
-        // адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, Constants.CURRENCY_NAME_LIST);
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
-
-        spinner1 = myFragmentConverter.getView().findViewById(R.id.spinner1);
-        spinner2 = myFragmentConverter.getView().findViewById(R.id.spinner2);
-        spinner1.setAdapter(adapter);
-        spinner2.setAdapter(adapter);
-
-
-        // заголовок
-        spinner1.setPrompt(getResources().getString(R.string.spinner_title));
-        spinner2.setPrompt(getResources().getString(R.string.spinner_title));
-        // выделяем элемент
-        spinner1.setSelection(0);
-        spinner2.setSelection(0);
-        // устанавливаем обработчик нажатия
-
-        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-//                // показываем позиция нажатого элемента
-//                Toast.makeText(getBaseContext(), "Position = " + position +
-//                        "\nName = " + parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-
-                Log.d("MYL", "Position = " + position + ". Name = " + parent.getSelectedItem().toString());
-                pos1 = position;
-
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-
-        });
-
-        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
-
-
-            @Override
-            public void onItemSelected(AdapterView<?> parent, View view,
-                                       int position, long id) {
-                // показываем позиция нажатого элемента
-//                Toast.makeText(getBaseContext(), "Position = " + position +
-//                        "\nName = " + parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
-                Log.d("MYL", "Position = " + position + ". Name = " + parent.getSelectedItem().toString());
-
-                pos2 = position;
-            }
-
-            @Override
-            public void onNothingSelected(AdapterView<?> adapterView) {
-
-            }
-
-        });
-
-
-
-
-
-
-    }
-
-
     @Override
     public void onClick(View view) {
 
@@ -321,6 +154,171 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
         }
 
     }
+
+
+
+//    private void initCurrencyRatesFragment () {
+////        if (isInternet) {
+////            latestUpdate.setText(saveLatestUpdate.saveLatestUpdateDate(MainActivity.this));
+////            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrency);
+////
+////        }else{
+////            latestUpdate.setText(saveLatestUpdate.loadLatestUpdateDate(MainActivity.this));
+////            myCurrency = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
+////        }
+//
+//        Log.d (Constants.MYLOG, "myFragmentCurrencyRates = " + myFragmentCurrencyRates);
+//        myRecyclerView = myFragmentCurrencyRates.getView().findViewById(R.id.listItem);
+////        myRecyclerView = (RecyclerView) myPagerAdapter.getItem(0).getView().findViewById(R.id.listItem);
+//
+//        myRecyclerView.setHasFixedSize(true);
+//        LinearLayoutManager llm = new LinearLayoutManager(MainActivity.this);
+//        llm.setOrientation(LinearLayoutManager.VERTICAL);
+//        myRecyclerView.setLayoutManager(llm);
+//        CurrencyAdapter currencyAdapter = new CurrencyAdapter(myList);
+//        myRecyclerView.setAdapter(currencyAdapter);
+//
+//
+//        latestUpdate = myFragmentCurrencyRates.getView().findViewById(R.id.latestUpdate);
+////        latestUpdate = (TextView) myPagerAdapter.getItem(0).getView().findViewById(R.id.latestUpdate);
+//
+//
+////        myList.add(new CurrencyForRecyclerView("Валюта:", "Покупка", "Продажа"));
+//////        Log.d (Constants.MYLOG, "myCurrency.size() = " + myCurrency.size());
+////        for (int i = 0; i < myCurrency.size(); i++){
+////            myList.add(new CurrencyForRecyclerView(
+////                    myCurrency.get(i).getCcy() + "/" + myCurrency.get(i).getBaseCcy(),
+////                    myCurrency.get(i).getBuy(),
+////                    myCurrency.get(i).getSale()));
+//
+//
+////        }
+////        Log.d (Constants.MYLOG, "myList = " + myList.get(4).getCurrency());
+//    }
+//
+//    private void operationsWithCurrencyRatesFragment () {
+//        if (isInternet) {
+//
+//            latestUpdate.setText(saveLatestUpdate.saveLatestUpdateDate(MainActivity.this));
+//            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrency);
+//
+//        }else{
+//
+//            latestUpdate.setText(saveLatestUpdate.loadLatestUpdateDate(MainActivity.this));
+//            myCurrency = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
+//
+//        }
+//
+//        myList.add(new CurrencyForRecyclerView("Валюта:", "Покупка", "Продажа"));
+////        Log.d (Constants.MYLOG, "myCurrency.size() = " + myCurrency.size());
+//        for (int i = 0; i < myCurrency.size(); i++) {
+//            myList.add(new CurrencyForRecyclerView(
+//                    myCurrency.get(i).getCcy() + "/" + myCurrency.get(i).getBaseCcy(),
+//                    myCurrency.get(i).getBuy(),
+//                    myCurrency.get(i).getSale()));
+//        }
+//    }
+
+
+
+
+
+
+
+//    private void responseFromPB () {
+//
+//        Controller.getApi().getData().enqueue(new Callback<List<Currency>>() {
+//            @Override
+//            public void onResponse(Call<List<Currency>> call, Response<List<Currency>> response) {
+//
+//                isInternet = true;
+//                // 0 - EUR(Base UAH), 1 - RUR(Base UAH), 2 - USD(Base UAH), 3 - BTC(Base USD)
+//                myCurrency = response.body();
+//                //myCurrency.addAll(response.body());
+////
+//            }
+//
+//            @Override
+//            public void onFailure(Call<List<Currency>> call, Throwable t) {
+//                isInternet = false;
+//
+//
+//            }
+//        });
+//
+//    }
+//
+//    private void initConverterFragment() {
+//
+//        etFirstCurrency = myFragmentConverter.getView().findViewById(R.id.editText);
+//        tvSecondCurrency = myFragmentConverter.getView().findViewById(R.id.textView);
+//        btnConvert = myFragmentConverter.getView().findViewById(R.id.button);
+//        btnConvert.setOnClickListener(this);
+//
+//        // адаптер
+//        ArrayAdapter<String> adapter = new ArrayAdapter<>(this, R.layout.custom_spinner_item, Constants.CURRENCY_NAME_LIST);
+//        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
+//
+//        spinner1 = myFragmentConverter.getView().findViewById(R.id.spinner1);
+//        spinner2 = myFragmentConverter.getView().findViewById(R.id.spinner2);
+//        spinner1.setAdapter(adapter);
+//        spinner2.setAdapter(adapter);
+//
+//
+//        // заголовок
+//        spinner1.setPrompt(getResources().getString(R.string.spinner_title));
+//        spinner2.setPrompt(getResources().getString(R.string.spinner_title));
+//        // выделяем элемент
+//        spinner1.setSelection(0);
+//        spinner2.setSelection(0);
+//        // устанавливаем обработчик нажатия
+//
+//        spinner1.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view,
+//                                       int position, long id) {
+////                // показываем позиция нажатого элемента
+////                Toast.makeText(getBaseContext(), "Position = " + position +
+////                        "\nName = " + parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//
+//                Log.d("MYL", "Position = " + position + ". Name = " + parent.getSelectedItem().toString());
+//                pos1 = position;
+//
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//
+//        });
+//
+//        spinner2.setOnItemSelectedListener(new AdapterView.OnItemSelectedListener() {
+//
+//
+//            @Override
+//            public void onItemSelected(AdapterView<?> parent, View view,
+//                                       int position, long id) {
+//                // показываем позиция нажатого элемента
+////                Toast.makeText(getBaseContext(), "Position = " + position +
+////                        "\nName = " + parent.getSelectedItem().toString(), Toast.LENGTH_SHORT).show();
+//                Log.d("MYL", "Position = " + position + ". Name = " + parent.getSelectedItem().toString());
+//
+//                pos2 = position;
+//            }
+//
+//            @Override
+//            public void onNothingSelected(AdapterView<?> adapterView) {
+//
+//            }
+//
+//        });
+//    }
+
+
+
 
 
 
