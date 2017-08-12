@@ -8,4 +8,17 @@
     <string name="latest_upd">"Последнее обновление: "</string>
 
 
+    <string name="list_header1"><b>Валюта:</b></string>
+    <string name="list_header2"><b>Покупка</b></string>
+    <string name="list_header3"><b>Продажа</b></string>
+
+
+
+
+    <string name="msg_warn1">Проверьте подключение к интернету!</string>
+    <string name="msg_warn2">Информация о курсах валют отсутствует! Проверьте соединение с сетью!</string>
+
+
+
+
 </resources>

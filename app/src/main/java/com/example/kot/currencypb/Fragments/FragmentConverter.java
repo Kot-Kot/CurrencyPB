@@ -23,10 +23,10 @@ import com.example.kot.currencypb.R;
  */
 
 public class FragmentConverter extends Fragment {
-    EditText editText;
-    TextView textView;
+    EditText etFirstCurrency;
+    TextView tvSecondCurrency;
     View myRootView;
-    Button button;
+    Button btnConvert;
     Spinner spinner1;
     Spinner spinner2;
     int pos1 = 0;
@@ -57,14 +57,19 @@ public class FragmentConverter extends Fragment {
         myRootView = inflater.inflate(R.layout.fragment_converter, container, false);
 
 
-        editText = (EditText) myRootView.findViewById(R.id.editText);
-        textView = (TextView) myRootView.findViewById(R.id.textView);
-        button = (Button) myRootView.findViewById(R.id.button);
-        spinner1 = (Spinner) myRootView.findViewById(R.id.spinner1);
-        spinner2 = (Spinner) myRootView.findViewById(R.id.spinner2);
+        etFirstCurrency = myRootView.findViewById(R.id.editText);
+        tvSecondCurrency = myRootView.findViewById(R.id.textView);
+
+        if (savedInstanceState != null) {
+            tvSecondCurrency.setText(savedInstanceState.getString(Constants.SECOND_CURRENCY_TV));
+        }
+
+        btnConvert = myRootView.findViewById(R.id.button);
+        spinner1 = myRootView.findViewById(R.id.spinner1);
+        spinner2 = myRootView.findViewById(R.id.spinner2);
 
         // адаптер
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(getActivity(), R.layout.custom_spinner_item, Constants.data);
+        ArrayAdapter<String> adapter = new ArrayAdapter<>(getActivity(), R.layout.custom_spinner_item, Constants.CURRENCY_NAME_LIST);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
 
 
@@ -107,13 +112,10 @@ public class FragmentConverter extends Fragment {
             }
         });
 
-        button.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View view) {
+        btnConvert.setOnClickListener(view -> {
 
-                myButtonClickListener.buttonClicked(pos1, pos2, editText, textView);
-                Log.d(Constants.MYLOG, "Button clicked in Fragment ");
-            }
+            myButtonClickListener.buttonClicked(pos1, pos2, etFirstCurrency, tvSecondCurrency);
+            Log.d(Constants.MYLOG, "Button clicked in Fragment ");
         });
 
 
@@ -121,6 +123,13 @@ public class FragmentConverter extends Fragment {
         return myRootView;
     }
 
+
+    @Override
+    public void onSaveInstanceState(Bundle outState) {
+        super.onSaveInstanceState(outState);
+
+        outState.putString(Constants.SECOND_CURRENCY_TV, tvSecondCurrency.getText().toString());
+    }
 
 
 }

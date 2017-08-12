@@ -1,10 +1,9 @@
-package com.example.kot.currencypb;
+package com.example.kot.currencypb.Retrofit2;
 
 import java.util.List;
 
 import retrofit2.Call;
 import retrofit2.http.GET;
-import retrofit2.http.Query;
 
 /**
  * Created by Kot Kot on 31.07.2017.

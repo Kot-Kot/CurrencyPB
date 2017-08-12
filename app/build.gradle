@@ -1,5 +1,8 @@
 apply plugin: 'com.android.application'
 
+apply plugin: 'me.tatarka.retrolambda'
+
+
 android {
     compileSdkVersion 26
     buildToolsVersion "26.0.0"
@@ -17,6 +20,11 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+
+    }
 }
 
 dependencies {
@@ -32,6 +40,8 @@ dependencies {
 
     compile 'com.squareup.retrofit2:retrofit:2.3.0'
     compile 'com.squareup.retrofit2:converter-gson:2.3.0'
+
+    compile 'me.tatarka:gradle-retrolambda:3.6.1'
 
     testCompile 'junit:junit:4.12'
 

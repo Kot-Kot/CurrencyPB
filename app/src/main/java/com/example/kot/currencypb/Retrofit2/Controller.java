@@ -1,4 +1,6 @@
-package com.example.kot.currencypb;
+package com.example.kot.currencypb.Retrofit2;
+
+import com.example.kot.currencypb.Constants.Constants;
 
 import retrofit2.Retrofit;
 import retrofit2.converter.gson.GsonConverterFactory;
@@ -9,7 +11,7 @@ import retrofit2.converter.gson.GsonConverterFactory;
 
 public class Controller {
 
-    static final String BASE_URL = "https://api.privatbank.ua/";
+//    static final String BASE_URL = "https://api.privatbank.ua/";
 
     public static Pbank getApi() {
 
@@ -18,7 +20,7 @@ public class Controller {
 //                .create();
 
         Retrofit myRetrofit = new Retrofit.Builder()
-                .baseUrl(BASE_URL)
+                .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 

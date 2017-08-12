@@ -4,7 +4,7 @@ import android.util.Log;
 import android.widget.EditText;
 import android.widget.TextView;
 
-import com.example.kot.currencypb.Currency;
+import com.example.kot.currencypb.Retrofit2.Currency;
 
 import java.util.List;
 
@@ -34,7 +34,7 @@ public class CurrencyConverterLogicImpl implements CurrencyConverterLogic {
                 switch (convertedCurrency2) {
                     case 0: //UAH
                         textView.setText(editText.getText().toString());
-                        Log.d("myl_conversion", "UAH UAH");
+
                         break;
                     case 1: //EUR
                         temp = (double) Math.round((Double.parseDouble(editText.getText().toString())
@@ -153,7 +153,7 @@ public class CurrencyConverterLogicImpl implements CurrencyConverterLogic {
                                 * Double.parseDouble(myCurrency.get(1).getBuy())) * 1000d) / 1000d;
 
                         textView.setText(temp.toString());
-                        Log.d("myl_conversion", "RUR UAH");
+
 
                         break;
                     case 1: //EUR
@@ -219,7 +219,7 @@ public class CurrencyConverterLogicImpl implements CurrencyConverterLogic {
                                 * Double.parseDouble(myCurrency.get(3).getBuy()))
                                 * 1000d) / 1000d;
                         textView.setText(temp.toString());
-                        Log.d("myl_conversion", "BTC USD");
+
 
                         break;
                     case 3: //RUR

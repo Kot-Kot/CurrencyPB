@@ -1,4 +1,4 @@
-package com.example.kot.currencypb;
+package com.example.kot.currencypb.Retrofit2;
 
 import com.google.gson.annotations.Expose;
 import com.google.gson.annotations.SerializedName;
