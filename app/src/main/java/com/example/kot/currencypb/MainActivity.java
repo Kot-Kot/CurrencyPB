@@ -41,7 +41,7 @@ import retrofit2.Response;
 import retrofit2.Retrofit;
 
 public class MainActivity extends FragmentActivity implements View.OnClickListener, FragmentConverter.onButtonClickListener {
-    SaveLatestUpdate saveLatestUpdate = new SaveLatestUpdateImpl();
+
 
 
     public static void setMyCurrency(List<Currency> myCurrency) {
@@ -50,27 +50,30 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     private static List<Currency> myCurrency;
 
-
-    Spinner spinner1;
-    Spinner spinner2;
-
-    int pos1 = 0;
-    int pos2 = 0;
-
-    TextView latestUpdate;
-    EditText etFirstCurrency;
-    TextView tvSecondCurrency;
-    Button btnConvert;
-
-    RecyclerView myRecyclerView;
-    List<CurrencyForRecyclerView> myList = new ArrayList<>();
+//    SaveLatestUpdate saveLatestUpdate = new SaveLatestUpdateImpl();
+//
+//    boolean isInternet;
+//
+//    Spinner spinner1;
+//    Spinner spinner2;
+//
+//    int pos1 = 0;
+//    int pos2 = 0;
+//
+//    TextView latestUpdate;
+//    EditText etFirstCurrency;
+//    TextView tvSecondCurrency;
+//    Button btnConvert;
+//
+//    RecyclerView myRecyclerView;
+//    List<CurrencyForRecyclerView> myList = new ArrayList<>();
 
     FragmentCurrencyRates myFragmentCurrencyRates = new FragmentCurrencyRates();
     FragmentConverter myFragmentConverter = new FragmentConverter();
 
     FragPagerAdapter myPagerAdapter;
     ViewPager myViewPager;
-    public static boolean isInternet;
+
 
 
 

@@ -137,9 +137,6 @@ public class FragmentCurrencyRates extends Fragment {
     void currencyRatesActions()  {
 
         if (isInternet) {
-            Log.d(Constants.MYLOG, "MainActivity.isInternet = " + MainActivity.isInternet);
-
-
 
             myLatestUpdate.setText(saveLatestUpdate.saveLatestUpdateDate(getActivity()));
             saveLatestUpdate.saveCurrencyRates(getActivity(), myCurrency);
@@ -148,7 +145,6 @@ public class FragmentCurrencyRates extends Fragment {
 
 
         }else{
-            Log.d(Constants.MYLOG, "MainActivity.isInternet = " + MainActivity.isInternet);
 
             myLatestUpdate.setText(saveLatestUpdate.loadLatestUpdateDate(getActivity()));
             myCurrency = saveLatestUpdate.loadCurrencyRates(getActivity());
