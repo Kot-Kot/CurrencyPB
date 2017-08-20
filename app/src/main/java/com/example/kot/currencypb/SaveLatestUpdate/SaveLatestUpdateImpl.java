@@ -6,7 +6,7 @@ import android.content.SharedPreferences;
 import android.util.Log;
 
 import com.example.kot.currencypb.Constants.Constants;
-import com.example.kot.currencypb.Retrofit2.Currency;
+import com.example.kot.currencypb.Retrofit2.CurrencyTDO;
 import com.example.kot.currencypb.R;
 import com.google.gson.Gson;
 
@@ -21,7 +21,7 @@ import java.util.List;
 
 public class SaveLatestUpdateImpl implements SaveLatestUpdate {
     private String latestDate;
-    private List<Currency> currencyRates;
+    private List<CurrencyTDO> currencyRates;
 
     private Context myContext;
     private Activity myActivity;
@@ -50,9 +50,9 @@ public class SaveLatestUpdateImpl implements SaveLatestUpdate {
         return latestDate;
     }
 
-    public void saveCurrencyRates(Activity a, List<Currency> currencyList) {
+    public void saveCurrencyRates(Activity a, List<CurrencyTDO> currencyList) {
         int i = 0;
-        for (Currency currency : currencyList){
+        for (CurrencyTDO currency : currencyList) {
 
             Gson gson = new Gson();
 
@@ -93,8 +93,8 @@ public class SaveLatestUpdateImpl implements SaveLatestUpdate {
 
     }
 
-    public List<Currency> loadCurrencyRates(Activity a) {
-        List<Currency> currencyList = new ArrayList<>();
+    public List<CurrencyTDO> loadCurrencyRates(Activity a) {
+        List<CurrencyTDO> currencyList = new ArrayList<>();
         mySharedPreferences = a.getSharedPreferences(FILE_NAME, Context.MODE_PRIVATE);
         for (int i = 0; i < Constants.CURRENCY_QUANTITY; i++){
             Gson gson = new Gson();
@@ -103,10 +103,9 @@ public class SaveLatestUpdateImpl implements SaveLatestUpdate {
             String jsonFromPreferences = mySharedPreferences.getString(CURRENCY_RATES + String.valueOf(i), "");
 
 
+            //Type type = new TypeToken<CurrencyTDO>() {}.getType();
 
-            //Type type = new TypeToken<Currency>() {}.getType();
-
-            Currency currency = gson.fromJson(jsonFromPreferences, Currency.class);
+            CurrencyTDO currency = gson.fromJson(jsonFromPreferences, CurrencyTDO.class);
 
             Log.d(Constants.MYLOG, "jsonFromPreferences = " + jsonFromPreferences);
 

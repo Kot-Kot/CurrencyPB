@@ -2,20 +2,14 @@ package com.example.kot.currencypb;
 
 
 import android.support.v4.app.FragmentActivity;
-import android.support.v4.view.PagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
-import android.widget.AdapterView;
-import android.widget.ArrayAdapter;
-import android.widget.Button;
 import android.widget.EditText;
-import android.widget.Spinner;
 import android.widget.TextView;
 import android.widget.Toast;
+
 
 import com.example.kot.currencypb.Constants.Constants;
 import com.example.kot.currencypb.CurrencyConverterLogic.CurrencyConverterLogic;
@@ -23,32 +17,18 @@ import com.example.kot.currencypb.CurrencyConverterLogic.CurrencyConverterLogicI
 import com.example.kot.currencypb.Fragments.FragmentConverter;
 import com.example.kot.currencypb.Fragments.FragmentCurrencyRates;
 import com.example.kot.currencypb.PagerAdapter.FragPagerAdapter;
-import com.example.kot.currencypb.RecyclerView.CurrencyAdapter;
-import com.example.kot.currencypb.RecyclerView.CurrencyForRecyclerView;
-import com.example.kot.currencypb.Retrofit2.Controller;
-import com.example.kot.currencypb.Retrofit2.Currency;
-import com.example.kot.currencypb.Retrofit2.Pbank;
-import com.example.kot.currencypb.SaveLatestUpdate.SaveLatestUpdate;
-import com.example.kot.currencypb.SaveLatestUpdate.SaveLatestUpdateImpl;
-import com.google.gson.Gson;
+import com.example.kot.currencypb.Retrofit2.CurrencyTDO;
 
-import java.util.ArrayList;
 import java.util.List;
 
-import retrofit2.Call;
-import retrofit2.Callback;
-import retrofit2.Response;
-import retrofit2.Retrofit;
+public class MainActivity extends FragmentActivity implements
+        View.OnClickListener, FragmentConverter.onButtonClickListener, FragmentCurrencyRates.onGettingCurrencyListListener {
 
-public class MainActivity extends FragmentActivity implements View.OnClickListener, FragmentConverter.onButtonClickListener {
+    FragmentCurrencyRates myFragmentCurrencyRates = new FragmentCurrencyRates();
 
 
 
-    public static void setMyCurrency(List<Currency> myCurrency) {
-        MainActivity.myCurrency = myCurrency;
-    }
 
-    private static List<Currency> myCurrency;
 
 //    SaveLatestUpdate saveLatestUpdate = new SaveLatestUpdateImpl();
 //
@@ -67,17 +47,15 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //
 //    RecyclerView myRecyclerView;
 //    List<CurrencyForRecyclerView> myList = new ArrayList<>();
-
-    FragmentCurrencyRates myFragmentCurrencyRates = new FragmentCurrencyRates();
     FragmentConverter myFragmentConverter = new FragmentConverter();
-
     FragPagerAdapter myPagerAdapter;
     ViewPager myViewPager;
+    private List<CurrencyTDO> myCurrencyList;
 
 
-
-
-
+//    boolean isInternet;
+//    Manager myManager = new Manager();
+//    Service myService = myManager.getService();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -86,7 +64,9 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
         initPager();
 
+
     }
+
 
     private void initPager() {
 
@@ -148,7 +128,7 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
     @Override
     public void buttonClicked(int pos1, int pos2, EditText editText, TextView textView) {
         try{
-            CurrencyConverterLogic ccl = new CurrencyConverterLogicImpl(editText, textView, myCurrency);
+            CurrencyConverterLogic ccl = new CurrencyConverterLogicImpl(editText, textView, myCurrencyList);
             ccl.conversion(pos1, pos2);
             Log.d(Constants.MYLOG, "Button clicked" + pos1 + pos2);
         }catch (Exception e){
@@ -158,16 +138,23 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
     }
 
+    @Override
+    public void gettingCurrencyListListener(List<CurrencyTDO> currencyList) {
+//        Log.d(Constants.MYLOG, "MA myService.getMyCurrencyList() = " + myService.getMyCurrencyList());
+
+        myCurrencyList = currencyList;
+
+    }
 
 
 //    private void initCurrencyRatesFragment () {
 ////        if (isInternet) {
 ////            latestUpdate.setText(saveLatestUpdate.saveLatestUpdateDate(MainActivity.this));
-////            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrency);
+////            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrencyList);
 ////
 ////        }else{
 ////            latestUpdate.setText(saveLatestUpdate.loadLatestUpdateDate(MainActivity.this));
-////            myCurrency = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
+////            myCurrencyList = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
 ////        }
 //
 //        Log.d (Constants.MYLOG, "myFragmentCurrencyRates = " + myFragmentCurrencyRates);
@@ -187,12 +174,12 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //
 //
 ////        myList.add(new CurrencyForRecyclerView("Валюта:", "Покупка", "Продажа"));
-//////        Log.d (Constants.MYLOG, "myCurrency.size() = " + myCurrency.size());
-////        for (int i = 0; i < myCurrency.size(); i++){
+//////        Log.d (Constants.MYLOG, "myCurrencyList.size() = " + myCurrencyList.size());
+////        for (int i = 0; i < myCurrencyList.size(); i++){
 ////            myList.add(new CurrencyForRecyclerView(
-////                    myCurrency.get(i).getCcy() + "/" + myCurrency.get(i).getBaseCcy(),
-////                    myCurrency.get(i).getBuy(),
-////                    myCurrency.get(i).getSale()));
+////                    myCurrencyList.get(i).getCcy() + "/" + myCurrencyList.get(i).getBaseCcy(),
+////                    myCurrencyList.get(i).getBuy(),
+////                    myCurrencyList.get(i).getSale()));
 //
 //
 ////        }
@@ -203,22 +190,22 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 //        if (isInternet) {
 //
 //            latestUpdate.setText(saveLatestUpdate.saveLatestUpdateDate(MainActivity.this));
-//            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrency);
+//            saveLatestUpdate.saveCurrencyRates(MainActivity.this, myCurrencyList);
 //
 //        }else{
 //
 //            latestUpdate.setText(saveLatestUpdate.loadLatestUpdateDate(MainActivity.this));
-//            myCurrency = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
+//            myCurrencyList = saveLatestUpdate.loadCurrencyRates(MainActivity.this);
 //
 //        }
 //
 //        myList.add(new CurrencyForRecyclerView("Валюта:", "Покупка", "Продажа"));
-////        Log.d (Constants.MYLOG, "myCurrency.size() = " + myCurrency.size());
-//        for (int i = 0; i < myCurrency.size(); i++) {
+////        Log.d (Constants.MYLOG, "myCurrencyList.size() = " + myCurrencyList.size());
+//        for (int i = 0; i < myCurrencyList.size(); i++) {
 //            myList.add(new CurrencyForRecyclerView(
-//                    myCurrency.get(i).getCcy() + "/" + myCurrency.get(i).getBaseCcy(),
-//                    myCurrency.get(i).getBuy(),
-//                    myCurrency.get(i).getSale()));
+//                    myCurrencyList.get(i).getCcy() + "/" + myCurrencyList.get(i).getBaseCcy(),
+//                    myCurrencyList.get(i).getBuy(),
+//                    myCurrencyList.get(i).getSale()));
 //        }
 //    }
 
@@ -230,19 +217,19 @@ public class MainActivity extends FragmentActivity implements View.OnClickListen
 
 //    private void responseFromPB () {
 //
-//        Controller.getApi().getData().enqueue(new Callback<List<Currency>>() {
+//        Manager.getApi().getData().enqueue(new Callback<List<CurrencyTDO>>() {
 //            @Override
-//            public void onResponse(Call<List<Currency>> call, Response<List<Currency>> response) {
+//            public void onResponse(Call<List<CurrencyTDO>> call, Response<List<CurrencyTDO>> response) {
 //
 //                isInternet = true;
 //                // 0 - EUR(Base UAH), 1 - RUR(Base UAH), 2 - USD(Base UAH), 3 - BTC(Base USD)
-//                myCurrency = response.body();
-//                //myCurrency.addAll(response.body());
+//                myCurrencyList = response.body();
+//                //myCurrencyList.addAll(response.body());
 ////
 //            }
 //
 //            @Override
-//            public void onFailure(Call<List<Currency>> call, Throwable t) {
+//            public void onFailure(Call<List<CurrencyTDO>> call, Throwable t) {
 //                isInternet = false;
 //
 //

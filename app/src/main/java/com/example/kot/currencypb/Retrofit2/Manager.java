@@ -9,23 +9,38 @@ import retrofit2.converter.gson.GsonConverterFactory;
  * Created by Kot Kot on 31.07.2017.
  */
 
-public class Controller {
+public class Manager {
 
 //    static final String BASE_URL = "https://api.privatbank.ua/";
 
-    public static Pbank getApi() {
 
-//        Gson myGson = new GsonBuilder()
-//                .setLenient()
-//                .create();
+    private Retrofit retrofitInstance;
 
-        Retrofit myRetrofit = new Retrofit.Builder()
+    private Service service;
+
+
+    public Manager() {
+
+        retrofitInstance = new Retrofit.Builder()
                 .baseUrl(Constants.BASE_URL)
                 .addConverterFactory(GsonConverterFactory.create())
                 .build();
 
-        Pbank myPbank = myRetrofit.create(Pbank.class);
-        return myPbank;
-
     }
+
+
+    Retrofit getRetrofitInstance() {
+        return retrofitInstance;
+    }
+
+    public Service getService() {
+
+        if (service == null) {
+            service = new Service(retrofitInstance.create(Api.class));
+        }
+
+        return service;
+    }
+
+
 }

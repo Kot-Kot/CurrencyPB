@@ -2,7 +2,7 @@ package com.example.kot.currencypb.SaveLatestUpdate;
 
 import android.app.Activity;
 
-import com.example.kot.currencypb.Retrofit2.Currency;
+import com.example.kot.currencypb.Retrofit2.CurrencyTDO;
 
 import java.util.List;
 
@@ -18,8 +18,10 @@ public interface SaveLatestUpdate {
 
     String saveLatestUpdateDate (Activity a);
     String loadLatestUpdateDate (Activity a);
-    void saveCurrencyRates(Activity a, List<Currency> currency);
-    List<Currency> loadCurrencyRates (Activity a);
+
+    void saveCurrencyRates(Activity a, List<CurrencyTDO> currency);
+
+    List<CurrencyTDO> loadCurrencyRates(Activity a);
 
 
 }

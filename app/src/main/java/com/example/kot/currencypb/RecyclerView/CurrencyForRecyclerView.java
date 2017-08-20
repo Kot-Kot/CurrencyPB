@@ -7,10 +7,9 @@ package com.example.kot.currencypb.RecyclerView;
 public class CurrencyForRecyclerView {
 
     private String currency;
+    private String buy;
+    private String sale;
 
-    public String getCurrency() {
-        return currency;
-    }
 
     public CurrencyForRecyclerView(String currency, String buy, String sale) {
         this.currency = currency;
@@ -18,24 +17,24 @@ public class CurrencyForRecyclerView {
         this.sale = sale;
     }
 
-    public String getBuy() {
-        return buy;
+    public String getCurrency() {
+        return currency;
     }
-
-    public String getSale() {
-        return sale;
-    }
-
-    private String buy;
-
-    private String sale;
 
     public void setCurrency(String currency) {
         this.currency = currency;
     }
 
+    public String getBuy() {
+        return buy;
+    }
+
     public void setBuy(String buy) {
         this.buy = buy;
+    }
+
+    public String getSale() {
+        return sale;
     }
 
     public void setSale(String sale) {

@@ -7,19 +7,19 @@ import com.google.gson.annotations.SerializedName;
  * Created by Kot Kot on 31.07.2017.
  */
 
-public class Currency {
+public class CurrencyTDO {
 
     @SerializedName("ccy")
-    @Expose
+//    @Expose
     private String ccy;
     @SerializedName("base_ccy")
-    @Expose
+//    @Expose
     private String baseCcy;
     @SerializedName("buy")
-    @Expose
+//    @Expose
     private String buy;
     @SerializedName("sale")
-    @Expose
+//    @Expose
     private String sale;
 
     public String getCcy() {
