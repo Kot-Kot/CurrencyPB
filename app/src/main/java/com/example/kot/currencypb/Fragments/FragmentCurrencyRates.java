@@ -31,7 +31,7 @@ import java.util.List;
  * Created by Kot Kot on 03.08.2017.
  */
 
-public class FragmentCurrencyRates extends Fragment {
+public class FragmentCurrencyRates extends Fragment implements Service.onResponseListener {
 
     List<CurrencyTDO> myCurrencyList;
     SaveLatestUpdate saveLatestUpdate = new SaveLatestUpdateImpl();
@@ -66,18 +66,20 @@ public class FragmentCurrencyRates extends Fragment {
         myRecyclerView = myRootView.findViewById(R.id.listItem);
         myLatestUpdate = myRootView.findViewById(R.id.latestUpdate);
 
+        myService.responseFromPB(this);
+
 //        Service myService = myManager.getService();
 //        myManager.getService().responseFromPB();
 
-        Handler handler = new Handler();
-
-        Runnable r = () -> {
-            myCurrencyList = myService.getMyCurrencyList();
-            Log.d(Constants.MYLOG, "myService.getMyCurrencyList() = " + myCurrencyList);
-            currencyRatesActions();
-        };
-
-        handler.postDelayed(r, 500);
+//        Handler handler = new Handler();
+//
+//        Runnable r = () -> {
+//            myCurrencyList = myService.getMyCurrencyList();
+//            Log.d(Constants.MYLOG, "myService.getMyCurrencyList() = " + myCurrencyList);
+//            currencyRatesActions();
+//        };
+//
+//        handler.postDelayed(r, 500);
 
         return myRootView;
     }
@@ -153,6 +155,13 @@ public class FragmentCurrencyRates extends Fragment {
 
         //PayManager payManager = new PayManager(Constant.LOGGER, Environment.STAGING);
 
+    }
+
+    @Override
+    public void responseListener(List<CurrencyTDO> list) {
+        myCurrencyList = list;
+        Log.d(Constants.MYLOG, "myService.getMyCurrencyList() = " + myCurrencyList);
+        currencyRatesActions();
     }
 
     public interface onGettingCurrencyListListener {

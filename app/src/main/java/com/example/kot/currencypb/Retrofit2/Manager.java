@@ -1,5 +1,7 @@
 package com.example.kot.currencypb.Retrofit2;
 
+import android.app.Activity;
+
 import com.example.kot.currencypb.Constants.Constants;
 
 import retrofit2.Retrofit;
@@ -29,9 +31,9 @@ public class Manager {
     }
 
 
-    Retrofit getRetrofitInstance() {
-        return retrofitInstance;
-    }
+//    Retrofit getRetrofitInstance() {
+//        return retrofitInstance;
+//    }
 
     public Service getService() {
 
