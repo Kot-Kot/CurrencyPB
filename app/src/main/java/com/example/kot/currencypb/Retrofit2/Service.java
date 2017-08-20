@@ -21,9 +21,6 @@ import retrofit2.Response;
 
 public class Service {
 
-    //    Manager manager = new Manager();
-//    private Context context;
-    private boolean isInternet;
     private Api api;
     private List<CurrencyTDO> myCurrencyList;
 
@@ -32,11 +29,6 @@ public class Service {
 
         responseFromPB();
 
-
-    }
-
-    public boolean isInternet() {
-        return isInternet;
     }
 
     public Api getApi() {
@@ -64,31 +56,17 @@ public class Service {
             @Override
             public void onResponse(Call<List<CurrencyTDO>> call, Response<List<CurrencyTDO>> response) {
 
-                isInternet = true;
-                Log.d(Constants.MYLOG, "class Service isInternet = " + isInternet);
                 // 0 - EUR(Base UAH), 1 - RUR(Base UAH), 2 - USD(Base UAH), 3 - BTC(Base USD)
                 myCurrencyList = response.body();
-                //myCurrency.addAll(response.body());
-//                Log.d("myl", String.valueOf(myCurrency.get(0).getCcy()));
                 Log.d(Constants.MYLOG, "class Service myCurrencyList = " + myCurrencyList);
-
-
-//
 
             }
 
             @Override
             public void onFailure(Call<List<CurrencyTDO>> call, Throwable t) {
-                isInternet = false;
-                Log.d(Constants.MYLOG, "class Service isInternet = " + isInternet);
-//                Log.d (Constants.MYLOG, "onFailure = " + saveLatestUpdate.loadLatestUpdateDate(MainActivity.this));
-//                Log.d (Constants.MYLOG, "onFailure = " + saveLatestUpdate.loadCurrencyRates(MainActivity.this).get(0).getCcy().toString());
-
-//
 
                 myCurrencyList = null;
                 Log.d(Constants.MYLOG, "class Service myCurrencyList = " + myCurrencyList);
-
 
             }
         });
