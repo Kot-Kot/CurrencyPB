@@ -25,15 +25,13 @@ public class Service {
     private List<CurrencyTDO> myCurrencyList;
 
     public Service(Api api) {
+
         this.api = api;
 
         responseFromPB();
 
     }
 
-    public Api getApi() {
-        return api;
-    }
 
     public List<CurrencyTDO> getMyCurrencyList() {
         return myCurrencyList;
