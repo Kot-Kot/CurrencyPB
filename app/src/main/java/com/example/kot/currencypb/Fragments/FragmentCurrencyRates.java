@@ -160,7 +160,7 @@ public class FragmentCurrencyRates extends Fragment implements Service.onRespons
     @Override
     public void responseListener(List<CurrencyTDO> list) {
         myCurrencyList = list;
-        Log.d(Constants.MYLOG, "myService.getMyCurrencyList() = " + myCurrencyList);
+        Log.d(Constants.MYLOG, "responseListener(List<CurrencyTDO> list) = " + myCurrencyList);
         currencyRatesActions();
     }
 
