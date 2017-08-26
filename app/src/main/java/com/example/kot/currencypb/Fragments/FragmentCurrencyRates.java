@@ -151,11 +151,7 @@ public class FragmentCurrencyRates extends Fragment implements Service.onRespons
 
     }
 
-    void newMethod() {
 
-        //PayManager payManager = new PayManager(Constant.LOGGER, Environment.STAGING);
-
-    }
 
     @Override
     public void responseListener(List<CurrencyTDO> list) {
@@ -163,6 +159,13 @@ public class FragmentCurrencyRates extends Fragment implements Service.onRespons
         Log.d(Constants.MYLOG, "responseListener(List<CurrencyTDO> list) = " + myCurrencyList);
         currencyRatesActions();
     }
+
+    @Override
+    public void throwableListener(Throwable t) {
+        Log.d(Constants.MYLOG, "throwableListener(Throwable t) = " + t);
+
+    }
+
 
     public interface onGettingCurrencyListListener {
         void gettingCurrencyListListener(List<CurrencyTDO> currencyList);

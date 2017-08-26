@@ -59,6 +59,7 @@ public class Service {
                 Log.d(Constants.MYLOG, "class Service myCurrencyList = " + myCurrencyList);
                 myResponseListener.responseListener(myCurrencyList);
 
+                myResponseListener.throwableListener(t);
 
 
             }
@@ -72,6 +73,8 @@ public class Service {
     public interface onResponseListener {
 
         void responseListener(List<CurrencyTDO> list);
+
+        void throwableListener(Throwable t);
 
     }
 
